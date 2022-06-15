@@ -74,6 +74,30 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /* quad-blue */
+  --ion-color-quad-blue: #465782;
+	--ion-color-quad-blue-rgb: 70,87,130;
+	--ion-color-quad-blue-contrast: #ffffff;
+	--ion-color-quad-blue-contrast-rgb: 255,255,255;
+	--ion-color-quad-blue-shade: #3e4d72;
+	--ion-color-quad-blue-tint: #59688f;
+
+  /* quad-orange */
+  --ion-color-quad-orange: #fd9a35;
+	--ion-color-quad-orange-rgb: 253,154,53;
+	--ion-color-quad-orange-contrast: #000000;
+	--ion-color-quad-orange-contrast-rgb: 0,0,0;
+	--ion-color-quad-orange-shade: #df882f;
+	--ion-color-quad-orange-tint: #fda449;
+
+  /* quad-yellow */
+  --ion-color-quad-yellow: #f9b200;
+	--ion-color-quad-yellow-rgb: 249,178,0;
+	--ion-color-quad-yellow-contrast: #000000;
+	--ion-color-quad-yellow-contrast-rgb: 0,0,0;
+	--ion-color-quad-yellow-shade: #db9d00;
+	--ion-color-quad-yellow-tint: #faba1a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -233,4 +257,31 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-card-background: #1e1e1e;
   }
+}
+
+.ion-color-quad-blue {
+	--ion-color-base: var(--ion-color-quad-blue);
+	--ion-color-base-rgb: var(--ion-color-quad-blue-rgb);
+	--ion-color-contrast: var(--ion-color-quad-blue-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-quad-blue-contrast-rgb);
+	--ion-color-shade: var(--ion-color-quad-blue-shade);
+	--ion-color-tint: var(--ion-color-quad-blue-tint);
+}
+
+.ion-color-quad-orange {
+	--ion-color-base: var(--ion-color-quad-orange);
+	--ion-color-base-rgb: var(--ion-color-quad-orange-rgb);
+	--ion-color-contrast: var(--ion-color-quad-orange-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-quad-orange-contrast-rgb);
+	--ion-color-shade: var(--ion-color-quad-orange-shade);
+	--ion-color-tint: var(--ion-color-quad-orange-tint);
+}
+
+.ion-color-quad-yellow {
+	--ion-color-base: var(--ion-color-quad-yellow);
+	--ion-color-base-rgb: var(--ion-color-quad-yellow-rgb);
+	--ion-color-contrast: var(--ion-color-quad-yellow-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-quad-yellow-contrast-rgb);
+	--ion-color-shade: var(--ion-color-quad-yellow-shade);
+	--ion-color-tint: var(--ion-color-quad-yellow-tint);
 }
