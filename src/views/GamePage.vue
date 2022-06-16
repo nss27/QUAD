@@ -1,19 +1,24 @@
 <template>
     <ion-page mode="ios">
-        <ion-header class="ion-no-border">
+        <ion-header class="ion-no-border" collapse="fade">
             <ion-toolbar>
                 <ion-buttons>
                     <ion-back-button></ion-back-button>
                 </ion-buttons>
+                <ion-title>클루</ion-title>
             </ion-toolbar>
         </ion-header>
 
-        <ion-content :fullscreen="true">
+        <ion-content :fullscreen="false">
             <div class="bg-img">
                 <img src="https://image.yes24.com/goods/67447169/XL" alt="">
             </div>
 
             <div class="game-info">
+                <ion-header collapse="condense">
+                    <ion-toolbar color="transparent"></ion-toolbar>
+                </ion-header>
+
                 <div class="info-box">
                     <div class="title">
                         <span>클루</span>
@@ -75,6 +80,7 @@ import {
     IonBackButton,
     IonCard,
     IonCardContent,
+    IonTitle
 } from '@ionic/vue'
 
 export default defineComponent({
@@ -87,15 +93,12 @@ export default defineComponent({
         IonBackButton,
         IonCard,
         IonCardContent,
+        IonTitle
     }
 })
 </script>
 
 <style scoped>
-ion-toolbar {
-    --background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 25%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.6) 75%, rgba(0, 0, 0, 0) 100%);
-}
-
 .bg-img {
     position: fixed;
     top: 0;
