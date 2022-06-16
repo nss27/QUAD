@@ -14,6 +14,22 @@
             </div>
 
             <div class="game-info">
+                <div class="info-box">
+                    <div class="title">
+                        <span>클루</span>
+                        <span>추리(5인)</span>
+                    </div>
+                    <br>
+                    <div class="text">
+                        "범인은 이 안에 있다"
+                        <br>탐정이 되어 살인사건을 추리해보자
+                    </div>
+                    <br>
+                    <div class="hash-tag">
+                        #협잡 #추리 #기억력 #패밀리
+                    </div>
+                </div>
+
                 <ion-card>
                     <ion-card-content>
                         <div class="item">
@@ -77,7 +93,7 @@ export default defineComponent({
 
 <style scoped>
 ion-toolbar {
-    --background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.8) 25%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0) 100%);
+    --background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 25%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.6) 75%, rgba(0, 0, 0, 0) 100%);
 }
 
 .bg-img {
@@ -100,14 +116,17 @@ ion-toolbar {
 .game-info {
     height: 100%;
     background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    flex-flow: column wrap;
+}
+
+.game-info > * {
+    width: 100%;
 }
 
 .game-info ion-card {
-    position: absolute;
-    bottom: 0;
     margin: 0;
-    width: 100%;
     border-radius: 30px 30px 0 0;
 }
 
@@ -139,5 +158,42 @@ ion-toolbar {
 .play-info iframe {
     width: 100vw;
     height: calc(100vw / 16 * 9);
+}
+
+.play-info img {
+    width: 100vw;
+}
+
+.info-box {
+    padding: 16px;
+    color: #ffffff;
+}
+
+.info-box .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-flow: row wrap;
+}
+
+.info-box .title span:nth-child(1) {
+    font-size: 40px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.info-box .text {
+    white-space: pre;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-box .hash-tag {
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 </style>
