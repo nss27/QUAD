@@ -8,15 +8,17 @@
             </div>
 
             <ion-card class="search-box">
-                <CheckBoxContainer title="장르"></CheckBoxContainer>
-                <CheckBoxContainer title="인원수"></CheckBoxContainer>
-                <CheckBoxContainer title="난이도"></CheckBoxContainer>
+                <CheckBoxContainer :check-item="CheckItem01"></CheckBoxContainer>
+                <div class="br"></div>
+                <CheckBoxContainer :check-item="CheckItem02"></CheckBoxContainer>
+                <div class="br"></div>
+                <CheckBoxContainer :check-item="CheckItem03"></CheckBoxContainer>
             </ion-card>
         </ion-content>
 
         <ion-footer class="ion-no-border">
             <ion-toolbar>
-                <ion-button expand="full" size="large" color="quad-yellow" id="search-btn">
+                <ion-button expand="full" size="large" color="quad-yellow" id="search-btn" router-link="/gameList">
                     추천 리스트 보기
                 </ion-button>
             </ion-toolbar>
@@ -35,6 +37,9 @@ import {
     IonButton,
 } from '@ionic/vue';
 import CheckBoxContainer from "@/components/CheckBoxContainer.vue";
+import CheckItem01 from '@/jsons/CheckItem01.json'
+import CheckItem02 from '@/jsons/CheckItem02.json'
+import CheckItem03 from '@/jsons/CheckItem03.json'
 
 export default defineComponent({
     components: {
@@ -45,6 +50,13 @@ export default defineComponent({
         IonCard,
         IonButton,
         CheckBoxContainer
+    },
+    setup() {
+        return {
+            CheckItem01,
+            CheckItem02,
+            CheckItem03
+        }
     }
 });
 </script>
@@ -54,16 +66,34 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 120px;
+    height: 130px;
+    text-align: center;
+}
+
+.title div:nth-child(1) {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.title div:nth-child(2) {
+    font-weight: bold;
+    font-size: 26px;
+    margin-top: 20px;
+}
+
+.title div:nth-child(3) {
+    font-weight: 100;
+    font-size: 12px;
+    margin-top: 10px;
 }
 
 .search-box {
     margin: 0;
     border-radius: 30px 30px 0 0;
-    background: #ffffff;
     box-shadow: 0 0 20px #00000085;
-    height: calc(100% - 120px);
-    padding: 40px;
+    height: calc(100% - 130px);
+    padding: 40px 0 40px 40px;
+    overflow: scroll;
 }
 
 ion-footer ion-toolbar {
@@ -75,5 +105,9 @@ ion-footer ion-toolbar {
 
 #search-btn {
     margin: 0;
+}
+
+.br {
+    height: 40px;
 }
 </style>

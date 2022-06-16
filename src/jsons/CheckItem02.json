@@ -1,0 +1,54 @@
+{
+  "title": "인원",
+  "type": "circle",
+  "items": [
+    {
+      "text": "1인",
+      "isChecked": true
+    },
+    {
+      "text": "2인",
+      "isChecked": false
+    },
+    {
+      "text": "3인",
+      "isChecked": false
+    },
+    {
+      "text": "4인",
+      "isChecked": false
+    },
+    {
+      "text": "5인",
+      "isChecked": false
+    },
+    {
+      "text": "6인",
+      "isChecked": false
+    },
+    {
+      "text": "7인",
+      "isChecked": false
+    },
+    {
+      "text": "8인",
+      "isChecked": false
+    },
+    {
+      "text": "9인",
+      "isChecked": false
+    },
+    {
+      "text": "10인",
+      "isChecked": false
+    },
+    {
+      "text": "11인",
+      "isChecked": false
+    },
+    {
+      "text": "12인",
+      "isChecked": false
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "title": "장르",
+  "type": "bar",
+  "items": [
+    {
+      "text": "미스테리",
+      "isChecked": true
+    },
+    {
+      "text": "추리",
+      "isChecked": false
+    },
+    {
+      "text": "파티",
+      "isChecked": false
+    },
+    {
+      "text": "스피드",
+      "isChecked": false
+    },
+    {
+      "text": "전략",
+      "isChecked": false
+    },
+    {
+      "text": "기억력",
+      "isChecked": false
+    },
+    {
+      "text": "스포츠",
+      "isChecked": false
+    },
+    {
+      "text": "대화",
+      "isChecked": false
+    }
+  ]
+}
