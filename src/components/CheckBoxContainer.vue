@@ -3,8 +3,8 @@
         <span>{{ checkItem.title }}</span> 선택
     </div>
     <div class="check-box" :class="checkItem.type">
-        <span v-for="(item, index) in checkItem.items" :key="index" :class="{ active: item.isChecked }"
-            @click="itemClick(index)">{{ item.text }}</span>
+        <div v-for="(item, index) in checkItem.items" :key="index" :class="{ active: item.isChecked }"
+            @click="itemClick(item)">{{ item.text }}</div>
     </div>
 </template>
 
@@ -12,10 +12,15 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-    props: ['checkItem'],
+    data() {
+        return {
+            checkItem: this.initCheckItem
+        }
+    },
+    props: ['initCheckItem'],
     methods: {
-        itemClick(index: number) {
-            const item = this.checkItem.items[index]
+        itemClick(item: any) {
+            if (!this.checkItem.type.multiChoice) this.checkItem.items.map((el: any) => el.isChecked = false)
             item.isChecked = !item.isChecked
         }
     },
@@ -38,7 +43,6 @@ export default defineComponent({
 .check-box {
     display: flex;
     gap: 15px;
-    flex-flow: column wrap;
     overflow-x: scroll;
     overflow-y: hidden;
     margin-left: -50px;
@@ -58,16 +62,20 @@ export default defineComponent({
     height: 60px;
 }
 
-.check-box.bar span {
+.check-box div {
+    white-space: nowrap;
+}
+
+.check-box.bar div {
     padding: 8px 16px;
     border-radius: 14px;
     border: dashed 1px;
 }
 
-.check-box.circle span {
+.check-box.circle div {
     --size: 60px;
 
-    width: var(--size);
+    min-width: var(--size);
     height: var(--size);
     border-radius: 50%;
     border: solid 1px;
@@ -76,8 +84,8 @@ export default defineComponent({
     font-size: 18px;
 }
 
-.check-box.bar span.active,
-.check-box.circle span.active {
+.check-box.bar div.active,
+.check-box.circle div.active {
     border: none;
     background-color: var(--ion-color-quad-orange);
     color: #ffffff;

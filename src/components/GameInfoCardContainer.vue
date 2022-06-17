@@ -6,12 +6,10 @@
                 <span>클루</span>
                 <span>추리(5인)</span>
             </div>
-            <br>
             <div class="text">
                 "범인은 이 안에 있다"
                 <br>탐정이 되어 살인사건을 추리해보자
             </div>
-            <br>
             <div class="hash-tag">
                 #협잡 #추리 #기억력 #패밀리
             </div>
@@ -40,6 +38,9 @@ ion-card {
 .info-box {
     padding: 16px 16px 16px 0;
     width: calc(100% - 164px);
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
 }
 
 .title {

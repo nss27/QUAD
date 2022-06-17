@@ -1,6 +1,10 @@
 {
   "title": "장르",
-  "type": "bar",
+  "type": {
+    "bar": true,
+    "circle": false,
+    "multiChoice": true
+  },
   "items": [
     {
       "text": "미스테리",

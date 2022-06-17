@@ -8,17 +8,18 @@
             </div>
 
             <ion-card class="search-box">
-                <CheckBoxContainer :check-item="CheckItem01"></CheckBoxContainer>
+                <CheckBoxContainer :init-check-item="CheckItem01"></CheckBoxContainer>
                 <div class="br"></div>
-                <CheckBoxContainer :check-item="CheckItem02"></CheckBoxContainer>
+                <CheckBoxContainer :init-check-item="CheckItem02"></CheckBoxContainer>
                 <div class="br"></div>
-                <CheckBoxContainer :check-item="CheckItem03"></CheckBoxContainer>
+                <CheckBoxContainer :init-check-item="CheckItem03"></CheckBoxContainer>
             </ion-card>
         </ion-content>
 
         <ion-footer class="ion-no-border">
             <ion-toolbar>
-                <ion-button expand="full" size="large" color="quad-yellow" id="search-btn" router-link="/gameList">
+                <ion-button expand="full" size="large" color="quad-yellow" id="search-btn" router-link="/gameList"
+                    @click="searchGameList">
                     추천 리스트 보기
                 </ion-button>
             </ion-toolbar>
@@ -57,7 +58,14 @@ export default defineComponent({
             CheckItem02,
             CheckItem03
         }
-    }
+    },
+    methods: {
+        searchGameList() {
+            console.log('장르: ', this.CheckItem01.items.filter((item: any) => item.isChecked).map((item: any) => item.text))
+            console.log('인원수: ', this.CheckItem02.items.filter((item: any) => item.isChecked).map((item: any) => item.text))
+            console.log('난이도: ', this.CheckItem03.items.filter((item: any) => item.isChecked).map((item: any) => item.text))
+        }
+    },
 });
 </script>
 

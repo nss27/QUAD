@@ -1,6 +1,10 @@
 {
   "title": "난이도",
-  "type": "circle",
+  "type": {
+    "bar": false,
+    "circle": true,
+    "multiChoice": true
+  },
   "items": [
     {
       "text": "1",

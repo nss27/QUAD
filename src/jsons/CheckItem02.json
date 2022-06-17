@@ -1,6 +1,10 @@
 {
   "title": "인원",
-  "type": "circle",
+  "type": {
+    "bar": false,
+    "circle": true,
+    "multiChoice": false
+  },
   "items": [
     {
       "text": "1인",

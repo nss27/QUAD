@@ -15,21 +15,19 @@
             </div>
 
             <div class="game-info">
-                <ion-header collapse="condense">
-                    <ion-toolbar color="transparent"></ion-toolbar>
-                </ion-header>
-
                 <div class="info-box">
+                    <ion-header collapse="condense">
+                        <ion-toolbar color="transparent"></ion-toolbar>
+                    </ion-header>
+
                     <div class="title">
                         <span>클루</span>
                         <span>추리(5인)</span>
                     </div>
-                    <br>
                     <div class="text">
                         "범인은 이 안에 있다"
                         <br>탐정이 되어 살인사건을 추리해보자
                     </div>
-                    <br>
                     <div class="hash-tag">
                         #협잡 #추리 #기억력 #패밀리
                     </div>
@@ -124,7 +122,7 @@ export default defineComponent({
     flex-flow: column wrap;
 }
 
-.game-info > * {
+.game-info>* {
     width: 100%;
 }
 
@@ -135,7 +133,8 @@ export default defineComponent({
 
 .game-info ion-card ion-card-content {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .game-info ion-card ion-card-content .item {
@@ -154,7 +153,8 @@ export default defineComponent({
     font-size: 12px;
 }
 
-.play-info {
+.play-info,
+.play-info>* {
     background: var(--background);
 }
 
@@ -170,6 +170,18 @@ export default defineComponent({
 .info-box {
     padding: 16px;
     color: #ffffff;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 190px;
+}
+
+.info-box ion-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 .info-box .title {
