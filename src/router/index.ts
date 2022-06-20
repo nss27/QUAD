@@ -9,10 +9,12 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/gameList",
+    name: "gameList",
     component: () => import("@/views/GameListPage.vue"),
   },
   {
-    path: "/game/:id",
+    path: "/game",
+    name: "game",
     component: () => import("@/views/GamePage.vue"),
   },
 ];

@@ -5,13 +5,14 @@
                 <ion-buttons>
                     <ion-back-button></ion-back-button>
                 </ion-buttons>
-                <ion-title>클루</ion-title>
+                <ion-title>{{ game['game-name'] }}</ion-title>
             </ion-toolbar>
         </ion-header>
 
         <ion-content :fullscreen="false">
             <div class="bg-img">
-                <img src="https://image.yes24.com/goods/67447169/XL" alt="">
+                <img v-if="game['url-gameImage']" :src="game['url-gameImage']" alt="">
+                <LogoContainer v-else></LogoContainer>
             </div>
 
             <div class="game-info">
@@ -21,34 +22,33 @@
                     </ion-header>
 
                     <div class="title">
-                        <span>클루</span>
-                        <span>추리(5인)</span>
+                        <span>{{ game['game-name'] }}</span>
+                        <span>{{ game['game-type'] }}({{ game['game-personnel'] }})</span>
                     </div>
                     <div class="text">
-                        "범인은 이 안에 있다"
-                        <br>탐정이 되어 살인사건을 추리해보자
+                        {{ game['game-comment'] }}
                     </div>
                     <div class="hash-tag">
-                        #협잡 #추리 #기억력 #패밀리
+                        {{ game['game-hashTag'] }}
                     </div>
                 </div>
 
                 <ion-card>
                     <ion-card-content>
                         <div class="item">
-                            <span>1인</span>
+                            <span>{{ game['game-personnel'] }}</span>
                             <span>인원수</span>
                         </div>
                         <div class="item">
-                            <span>3</span>
+                            <span>{{ game['game-level'] }}</span>
                             <span>난이도</span>
                         </div>
                         <div class="item">
-                            <span>30분</span>
+                            <span>{{ game['game-playTime'] }}</span>
                             <span>플레이타임</span>
                         </div>
                         <div class="item">
-                            <span>23</span>
+                            <span>{{ game['position'] }}</span>
                             <span>위치</span>
                         </div>
                     </ion-card-content>
@@ -56,12 +56,15 @@
             </div>
 
             <div class="play-info">
-                <iframe src="https://www.youtube.com/embed/7Ium0jpht0g" title="YouTube video player" frameborder="0"
+                <iframe v-if="game['url-youtube']" :src="game['url-youtube']" title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
 
-                <img src="https://divedice1.wisacdn.com/_data/attach/202107/10/b94ecc73afee7dfd2cbf86f111a850db.jpg"
-                    alt="">
+                <NullBoxContainer type="video" v-else></NullBoxContainer>
+
+                <img v-if="game['url-gameDescriptionImage']" :src="game['url-gameDescriptionImage']" alt="">
+                
+                <NullBoxContainer type="image" v-else></NullBoxContainer>
             </div>
         </ion-content>
     </ion-page>
@@ -80,6 +83,8 @@ import {
     IonCardContent,
     IonTitle
 } from '@ionic/vue'
+import LogoContainer from '@/components/LogoContainer.vue'
+import NullBoxContainer from '@/components/NullBoxContainer.vue'
 
 export default defineComponent({
     components: {
@@ -91,8 +96,15 @@ export default defineComponent({
         IonBackButton,
         IonCard,
         IonCardContent,
-        IonTitle
-    }
+        IonTitle,
+        LogoContainer,
+        NullBoxContainer
+    },
+    data() {
+        return {
+            game: JSON.parse(String(this.$route.params.game))
+        }
+    },
 })
 </script>
 
@@ -103,15 +115,20 @@ export default defineComponent({
     left: 0;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
+    align-items: center;
     z-index: -1;
-    overflow: hidden;
 }
 
 .bg-img img {
     height: 100%;
     max-width: none;
+}
+
+.bg-img .logo-box {
+    --logo-size: 100vh;
 }
 
 .game-info {

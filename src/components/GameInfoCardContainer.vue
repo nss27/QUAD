@@ -1,17 +1,20 @@
 <template>
-    <ion-card router-link="/game/1">
-        <img src="https://image.yes24.com/goods/67447169/XL" alt="">
+    <ion-card @click="getGameInfo">
+        <div class="img-box">
+            <img v-if="game['url-gameImage']" :src="game['url-gameImage']" alt="">
+            <LogoContainer v-else></LogoContainer>
+        </div>
+
         <div class="info-box">
             <div class="title">
-                <span>클루</span>
-                <span>추리(5인)</span>
+                <span>{{ game['game-name'] }}</span>
+                <span>{{ game['game-type'] }}({{ game['game-personnel'] }})</span>
             </div>
             <div class="text">
-                "범인은 이 안에 있다"
-                <br>탐정이 되어 살인사건을 추리해보자
+                {{ game['game-comment'] }}
             </div>
             <div class="hash-tag">
-                #협잡 #추리 #기억력 #패밀리
+                {{ game['game-hashTag'] }}
             </div>
         </div>
     </ion-card>
@@ -19,13 +22,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import {
-    IonCard
-} from '@ionic/vue'
+import {IonCard} from '@ionic/vue'
+import LogoContainer from './LogoContainer.vue'
 
 export default defineComponent({
+    props: ['game'],
     components: {
-        IonCard
+        IonCard,
+        LogoContainer
+    },
+    methods: {
+        getGameInfo() {
+            this.$router.push({
+                name: 'game',
+                params: {
+                    game: JSON.stringify(this.game)
+                }
+            })
+        }
     }
 })
 </script>
@@ -50,13 +64,16 @@ ion-card {
     flex-flow: row wrap;
 }
 
+.title span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .title span:nth-child(1) {
     color: var(--ion-color-quad-orange);
     font-size: 20px;
     font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
 }
 
 .text {
@@ -72,11 +89,16 @@ ion-card {
     text-overflow: ellipsis;
 }
 
-img {
+.img-box {
     --size: 140px;
 
     width: var(--size);
     height: var(--size);
     margin: 16px 8px 16px 16px;
+    overflow: hidden;
+}
+
+.img-box .logo-box {
+    --logo-size: var(--size);
 }
 </style>

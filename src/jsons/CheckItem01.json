@@ -7,19 +7,15 @@
   },
   "items": [
     {
-      "text": "미스테리",
+      "text": "파티",
       "isChecked": true
     },
     {
-      "text": "추리",
-      "isChecked": false
-    },
-    {
-      "text": "파티",
-      "isChecked": false
-    },
-    {
       "text": "스피드",
+      "isChecked": false
+    },
+    {
+      "text": "추리",
       "isChecked": false
     },
     {

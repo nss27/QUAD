@@ -10,7 +10,7 @@
         </ion-header>
 
         <ion-content>
-            <GameInfoCard></GameInfoCard>
+            <GameInfoCard v-for="game in gameList" :key="game['id']" :game="game"></GameInfoCard>
         </ion-content>
     </ion-page>
 </template>
@@ -38,6 +38,11 @@ export default defineComponent({
         IonButtons,
         IonBackButton,
         GameInfoCard
+    },
+    data() {
+        return {
+            gameList: JSON.parse(String(this.$route.params.gameList))
+        }
     },
 })
 </script>
