@@ -10,7 +10,11 @@
         </ion-header>
 
         <ion-content>
-            <GameInfoCard v-for="game in gameList" :key="game['id']" :game="game"></GameInfoCard>
+            <template v-if="gameList.length > 0">
+                <GameInfoCard v-for="game in gameList" :key="game['id']" :game="game"></GameInfoCard>
+            </template>
+            
+            <NullBoxContainer v-else></NullBoxContainer>
         </ion-content>
     </ion-page>
 </template>
@@ -27,6 +31,7 @@ import {
     IonBackButton,
 } from '@ionic/vue';
 import GameInfoCard from '@/components/GameInfoCardContainer.vue';
+import NullBoxContainer from '@/components/NullBoxContainer.vue';
 
 export default defineComponent({
     components: {
@@ -37,7 +42,8 @@ export default defineComponent({
         IonTitle,
         IonButtons,
         IonBackButton,
-        GameInfoCard
+        GameInfoCard,
+        NullBoxContainer
     },
     data() {
         return {
