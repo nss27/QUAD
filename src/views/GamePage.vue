@@ -12,7 +12,7 @@
         <ion-content :fullscreen="false">
             <div class="bg-img">
                 <img v-if="game['url-gameImage']" :src="game['url-gameImage']" alt="">
-                <LogoContainer v-else></LogoContainer>
+                <img v-else src="assets/icon/icon-quad.png" alt="">
             </div>
 
             <div class="game-info">
@@ -83,7 +83,6 @@ import {
     IonCardContent,
     IonTitle
 } from '@ionic/vue'
-import LogoContainer from '@/components/LogoContainer.vue'
 import NullBoxContainer from '@/components/NullBoxContainer.vue'
 
 export default defineComponent({
@@ -97,7 +96,6 @@ export default defineComponent({
         IonCard,
         IonCardContent,
         IonTitle,
-        LogoContainer,
         NullBoxContainer
     },
     data() {

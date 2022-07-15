@@ -2,7 +2,7 @@
     <ion-card @click="getGameInfo">
         <div class="img-box">
             <img v-if="game['url-gameImage']" :src="game['url-gameImage']" alt="">
-            <LogoContainer v-else></LogoContainer>
+            <img v-else src="assets/icon/icon-quad.png" alt="">
         </div>
 
         <div class="info-box">
@@ -23,13 +23,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import {IonCard} from '@ionic/vue'
-import LogoContainer from './LogoContainer.vue'
 
 export default defineComponent({
     props: ['game'],
     components: {
-        IonCard,
-        LogoContainer
+        IonCard
     },
     methods: {
         getGameInfo() {
