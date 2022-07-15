@@ -34,7 +34,7 @@ export default defineComponent({
             this.$router.push({
                 name: 'game',
                 params: {
-                    game: JSON.stringify(this.game)
+                    gameId: this.game['id']
                 }
             })
         }

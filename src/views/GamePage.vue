@@ -100,8 +100,11 @@ export default defineComponent({
     },
     data() {
         return {
-            game: JSON.parse(String(this.$route.params.game))
+            game: Object as any
         }
+    },
+    created() {
+        this.game = JSON.parse(localStorage.gameList).filter((game: any) => game['id'] == this.$route.params.gameId)[0];
     },
 })
 </script>

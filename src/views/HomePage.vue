@@ -40,7 +40,6 @@ import CheckBoxContainer from "@/components/CheckBoxContainer.vue";
 import CheckItem01 from '@/jsons/CheckItem01.json'
 import CheckItem02 from '@/jsons/CheckItem02.json'
 import CheckItem03 from '@/jsons/CheckItem03.json'
-import { getSingleSheetData } from '@/utils/google-sheet-api'
 
 export default defineComponent({
     components: {
@@ -52,11 +51,6 @@ export default defineComponent({
         IonButton,
         CheckBoxContainer
     },
-    data() {
-        return {
-            gameList: []
-        }
-    },
     setup() {
         return {
             CheckItem01,
@@ -66,55 +60,15 @@ export default defineComponent({
     },
     methods: {
         searchGameList() {
-            const checkList = {
-                gameType: this.CheckItem01.items.filter((item: any) => item.isChecked).map((item: any) => item.text),
-                gamePersonnel: this.CheckItem02.items.filter((item: any) => item.isChecked).map((item: any) => item.text),
-                gameLevel: this.CheckItem03.items.filter((item: any) => item.isChecked).map((item: any) => item.text)
-            }
-
-            const params = this.gameList.filter((game: any) => {
-                let chk1 = false,
-                    chk2 = false,
-                    chk3 = false
-
-                checkList.gameType.forEach(type => {
-                    if (game['game-type'] == type) {
-                        chk1 = true
-                        return
-                    }
-                })
-
-                const strGP: string = game['game-personnel'].replace('인', '')
-                const chkGP = Number(checkList.gamePersonnel[0].replace('인', ''))
-
-                if (strGP.includes('-')) {
-                    const arrGP = strGP.split('-').map(GP => Number(GP))
-
-                    if (arrGP[0] <= chkGP && arrGP[1] >= chkGP) chk2 = true
-                } else {
-                    if (Number(strGP) == chkGP) chk2 = true
-                }
-
-                checkList.gameLevel.forEach(level => {
-                    if (game['game-level'] == level) {
-                        chk3 = true
-                        return
-                    }
-                })
-
-                return chk1 && chk2 && chk3
-            })
-
             this.$router.push({
                 name: 'gameList',
                 params: {
-                    gameList: JSON.stringify(params)
+                    gameType: this.CheckItem01.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(','),
+                    gamePersonnel: this.CheckItem02.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(','),
+                    gameLevel: this.CheckItem03.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(',')
                 }
             })
         }
-    },
-    created() {
-        getSingleSheetData('게임리스트').then(data => this.gameList = data)
     }
 });
 </script>
