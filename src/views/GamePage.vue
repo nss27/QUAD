@@ -84,6 +84,7 @@ import {
     IonTitle
 } from '@ionic/vue'
 import NullBoxContainer from '@/components/NullBoxContainer.vue'
+import { Storage } from '@capacitor/storage';
 
 export default defineComponent({
     components: {
@@ -103,8 +104,12 @@ export default defineComponent({
             game: Object as any
         }
     },
-    created() {
-        this.game = JSON.parse(localStorage.gameList).filter((game: any) => game['id'] == this.$route.params.gameId)[0];
+    async created() {
+        const result = await Storage.get({key:'gameList'});
+
+        if(result.value) {
+            this.game = JSON.parse(result.value).filter((game: any) => game['id'] == this.$route.params.gameId)[0];
+        }
     },
 })
 </script>

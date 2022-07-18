@@ -32,6 +32,7 @@ import {
 } from '@ionic/vue';
 import GameInfoCard from '@/components/GameInfoCardContainer.vue';
 import NullBoxContainer from '@/components/NullBoxContainer.vue';
+import { Storage } from '@capacitor/storage';
 
 export default defineComponent({
     components: {
@@ -50,43 +51,47 @@ export default defineComponent({
             gameList: Array as any
         }
     },
-    created() {
+    async created() {
         const gameType = String(this.$route.params.gameType).split(','),
         gamePersonnel = String(this.$route.params.gamePersonnel).split(','),
         gameLevel = String(this.$route.params.gameLevel).split(',');
 
-        this.gameList = JSON.parse(localStorage.gameList).filter((game: any) => {
-            let chk1 = false,
-                chk2 = false,
-                chk3 = false;
+        const result = await Storage.get({key: 'gameList'});
 
-            for(let i=0; i<gameType.length; i++) {
-                if (game['game-type'] == gameType[i]) {
-                    chk1 = true
-                    break
+        if(result.value) {
+            this.gameList = JSON.parse(result.value).filter((game: any) => {
+                let chk1 = false,
+                    chk2 = false,
+                    chk3 = false;
+    
+                for(let i=0; i<gameType.length; i++) {
+                    if (game['game-type'] == gameType[i]) {
+                        chk1 = true
+                        break
+                    }
                 }
-            }
-
-            const strGP: string = game['game-personnel'].replace('인', '')
-            const chkGP = Number(gamePersonnel[0].replace('인', ''))
-
-            if (strGP.includes('-')) {
-                const arrGP = strGP.split('-').map(GP => Number(GP))
-
-                if (arrGP[0] <= chkGP && arrGP[1] >= chkGP) chk2 = true
-            } else {
-                if (Number(strGP) == chkGP) chk2 = true
-            }
-
-            for(let i=0; i<gameLevel.length; i++) {
-                if (game['game-level'] == gameLevel[i]) {
-                    chk3 = true
-                    break
+    
+                const strGP: string = game['game-personnel'].replace('인', '')
+                const chkGP = Number(gamePersonnel[0].replace('인', ''))
+    
+                if (strGP.includes('-')) {
+                    const arrGP = strGP.split('-').map(GP => Number(GP))
+    
+                    if (arrGP[0] <= chkGP && arrGP[1] >= chkGP) chk2 = true
+                } else {
+                    if (Number(strGP) == chkGP) chk2 = true
                 }
-            }
-
-            return chk1 && chk2 && chk3
-        })
+    
+                for(let i=0; i<gameLevel.length; i++) {
+                    if (game['game-level'] == gameLevel[i]) {
+                        chk3 = true
+                        break
+                    }
+                }
+    
+                return chk1 && chk2 && chk3
+            })
+        }
     },
 })
 </script>
