@@ -1,0 +1,24 @@
+{
+  "background_color": "transparent",
+  "description": "보다 더 새로운 재미 모두와 함께 즐기는 보드카페 QUAD",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "QUAD",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "QUAD",
+  "start_url": "/",
+  "theme_color": "transparent",
+  "icons": [
+    {
+      "src": "assets/icon/favicon-quad.png",
+      "type": "image/png",
+      "sizes": "64x64"
+    },
+    {
+      "src": "assets/icon/icon-quad.png",
+      "type": "image/png",
+      "sizes": "520x520"
+    }
+  ]
+}

@@ -32,6 +32,14 @@
 
     <meta name="google-site-verification" content="lGJes7-f6SCGpXrRoDnTdG8LqfCIOAyLqwINGWkQ_O0" />
     <meta name="naver-site-verification" content="27bade3be05c9b9f5ee2790667b7084fe9132dc0" />
+
+    <link rel="manifest" href="manifest.json" />
+
+    <script type="module">
+      import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
+      const el = document.createElement('pwa-update');
+      document.body.appendChild(el);
+    </script>
   </head>
 
   <body>
