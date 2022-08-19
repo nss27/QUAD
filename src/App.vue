@@ -16,7 +16,7 @@ export default defineComponent({
     IonApp,
     IonRouterOutlet
   },
-  async created() {
+  async mounted() {
     const data = await googleApi.getSingleSheetData('게임리스트');
 
     if(data) {

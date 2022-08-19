@@ -104,7 +104,7 @@ export default defineComponent({
             game: Object as any
         }
     },
-    async created() {
+    async mounted() {
         const result = await Storage.get({key:'gameList'});
 
         if(result.value) {

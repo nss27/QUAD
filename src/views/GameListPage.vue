@@ -51,7 +51,7 @@ export default defineComponent({
             gameList: Array as any
         }
     },
-    async created() {
+    async mounted() {
         const gameType = String(this.$route.params.gameType).split(','),
         gamePersonnel = String(this.$route.params.gamePersonnel).split(','),
         gameLevel = String(this.$route.params.gameLevel).split(',');
