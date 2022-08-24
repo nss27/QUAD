@@ -1,5 +1,5 @@
 <template>
-    <ion-page mode="ios">
+    <ion-page>
         <ion-header class="ion-no-border" collapse="fade">
             <ion-toolbar>
                 <ion-buttons>

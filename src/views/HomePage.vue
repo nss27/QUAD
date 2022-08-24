@@ -1,5 +1,5 @@
 <template>
-    <ion-page mode="ios">
+    <ion-page>
         <ion-content color="quad-blue">
             <div class="title">
                 <div>QUAD</div>
