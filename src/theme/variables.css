@@ -216,7 +216,7 @@ http://ionicframework.com/docs/theming/ */
    * -------------------------------------------
    */
 
-  .ios body {
+  .ios body, .md body {
     --ion-background-color: #000000;
     --ion-background-color-rgb: 0, 0, 0;
 
@@ -259,7 +259,7 @@ http://ionicframework.com/docs/theming/ */
    * -------------------------------------------
    */
 
-  .md body {
+  /* .md body {
     --ion-background-color: #121212;
     --ion-background-color-rgb: 18, 18, 18;
 
@@ -295,7 +295,7 @@ http://ionicframework.com/docs/theming/ */
     --ion-tab-bar-background: #1f1f1f;
 
     --ion-card-background: #1e1e1e;
-  }
+  } */
 }
 
 .ion-color-quad-blue {

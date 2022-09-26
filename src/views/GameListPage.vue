@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <ion-header class="ion-no-border">
+        <ion-header :translucent="true">
             <ion-toolbar>
                 <ion-buttons>
                     <ion-back-button></ion-back-button>
@@ -9,18 +9,18 @@
             </ion-toolbar>
         </ion-header>
 
-        <ion-content>
-            <template v-if="gameList.length > 0">
-                <GameInfoCard v-for="game in gameList" :key="game['id']" :game="game"></GameInfoCard>
+        <ion-content :fullscreen="true">
+            <template v-if="!Common.isNull(gameList)">
+                <GameInfoCardVue v-for="game in gameList" :key="game['id']" :game="game"></GameInfoCardVue>
             </template>
-            
-            <NullBoxContainer v-else></NullBoxContainer>
+
+            <NoDataVue v-else></NoDataVue>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import {
     IonPage,
     IonContent,
@@ -29,10 +29,14 @@ import {
     IonTitle,
     IonButtons,
     IonBackButton,
+    loadingController,
+    alertController
 } from '@ionic/vue';
-import GameInfoCard from '@/components/GameInfoCardContainer.vue';
-import NullBoxContainer from '@/components/NullBoxContainer.vue';
-import { Storage } from '@capacitor/storage';
+import { useRoute } from 'vue-router';
+import GoogleApi from '@/utils/GoogleApi';
+import Common from '@/utils/Common';
+import GameInfoCardVue from '@/components/GameInfoCard.vue';
+import NoDataVue from '@/components/NoData.vue';
 
 export default defineComponent({
     components: {
@@ -43,54 +47,77 @@ export default defineComponent({
         IonTitle,
         IonButtons,
         IonBackButton,
-        GameInfoCard,
-        NullBoxContainer
+        GameInfoCardVue,
+        NoDataVue
     },
-    data() {
+    setup() {
+        const gameList = ref();
+        const route = useRoute();
+
+        onMounted(async () => {
+            const gameType = String(route.params.gameType).split(','),
+                gamePersonnel = String(route.params.gamePersonnel).split(','),
+                gameLevel = String(route.params.gameLevel).split(',');
+
+            const loading = await loadingController.create({
+                message: "데이터 조회중",
+                mode: "ios",
+            });
+
+            loading.present();
+
+            try {
+                const list: any[] = await GoogleApi.getSingleSheetData('게임리스트');
+
+                gameList.value = list.filter(gameInfo => {
+                    let chk1 = false,
+                        chk2 = false,
+                        chk3 = false;
+
+                    for (let i = 0; i < gameType.length; i++) {
+                        if (gameInfo['game-type'] == gameType[i]) {
+                            chk1 = true
+                            break
+                        }
+                    }
+
+                    const strGP: string = gameInfo['game-personnel'].replace('인', '')
+                    const chkGP = Number(gamePersonnel[0].replace('인', ''))
+
+                    if (strGP.includes('-')) {
+                        const arrGP = strGP.split('-').map(GP => Number(GP))
+
+                        if (arrGP[0] <= chkGP && arrGP[1] >= chkGP) chk2 = true
+                    } else {
+                        if (Number(strGP) == chkGP) chk2 = true
+                    }
+
+                    for (let i = 0; i < gameLevel.length; i++) {
+                        if (gameInfo['game-level'] == gameLevel[i]) {
+                            chk3 = true
+                            break
+                        }
+                    }
+
+                    return chk1 && chk2 && chk3
+                }).sort((a, b) => Number(a.id) - Number(b.id));
+            } catch (error) {
+                const alert = await alertController.create({
+                    header: "오류 발생",
+                    subHeader: `${error}`,
+                    buttons: ["OK"],
+                    mode: "ios",
+                });
+
+                await alert.present();
+            } finally {
+                loading.dismiss();
+            }
+        })
+
         return {
-            gameList: Array as any
-        }
-    },
-    async mounted() {
-        const gameType = String(this.$route.params.gameType).split(','),
-        gamePersonnel = String(this.$route.params.gamePersonnel).split(','),
-        gameLevel = String(this.$route.params.gameLevel).split(',');
-
-        const result = await Storage.get({key: 'gameList'});
-
-        if(result.value) {
-            this.gameList = JSON.parse(result.value).filter((game: any) => {
-                let chk1 = false,
-                    chk2 = false,
-                    chk3 = false;
-    
-                for(let i=0; i<gameType.length; i++) {
-                    if (game['game-type'] == gameType[i]) {
-                        chk1 = true
-                        break
-                    }
-                }
-    
-                const strGP: string = game['game-personnel'].replace('인', '')
-                const chkGP = Number(gamePersonnel[0].replace('인', ''))
-    
-                if (strGP.includes('-')) {
-                    const arrGP = strGP.split('-').map(GP => Number(GP))
-    
-                    if (arrGP[0] <= chkGP && arrGP[1] >= chkGP) chk2 = true
-                } else {
-                    if (Number(strGP) == chkGP) chk2 = true
-                }
-    
-                for(let i=0; i<gameLevel.length; i++) {
-                    if (game['game-level'] == gameLevel[i]) {
-                        chk3 = true
-                        break
-                    }
-                }
-    
-                return chk1 && chk2 && chk3
-            })
+            Common,
+            gameList
         }
     },
 })

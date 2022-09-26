@@ -3,27 +3,36 @@
         <span>{{ checkItem.title }}</span> 선택
     </div>
     <div class="check-box" :class="checkItem.type">
-        <div v-for="(item, index) in checkItem.items" :key="index" :class="{ active: item.isChecked }"
-            @click="itemClick(item)">{{ item.text }}</div>
+        <div v-for="(item, index) in items" :key="index" :class="{ active: item.isChecked }" @click="itemClick(item)">{{
+        item.text }}</div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, toRefs } from 'vue'
 
 export default defineComponent({
-    data() {
+    props: ['checkItem'],
+    setup(props) {
+        const { checkItem } = toRefs(props);
+        const items = ref(checkItem.value.items);
+
+        const itemClick = (item: any) => {
+            if (!checkItem.value.type.multiChoice) {
+                (items.value as any[]).map(item => {
+                    item.isChecked = false;
+                    return item;
+                });
+            }
+
+            item.isChecked = !item.isChecked;
+        }
+
         return {
-            checkItem: this.initCheckItem
+            items,
+            itemClick,
         }
-    },
-    props: ['initCheckItem'],
-    methods: {
-        itemClick(item: any) {
-            if (!this.checkItem.type.multiChoice) this.checkItem.items.map((el: any) => el.isChecked = false)
-            item.isChecked = !item.isChecked
-        }
-    },
+    }
 })
 </script>
 

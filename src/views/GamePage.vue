@@ -1,77 +1,93 @@
 <template>
     <ion-page>
-        <ion-header class="ion-no-border" collapse="fade">
-            <ion-toolbar>
-                <ion-buttons>
-                    <ion-back-button></ion-back-button>
-                </ion-buttons>
-                <ion-title>{{ game['game-name'] }}</ion-title>
-            </ion-toolbar>
-        </ion-header>
+        <template v-if="!Common.isNull(game)">
+            <ion-header class="ion-no-border" collapse="fade" :translucent="true">
+                <ion-toolbar>
+                    <ion-buttons>
+                        <ion-back-button></ion-back-button>
+                    </ion-buttons>
+                    <ion-title>{{ game['game-name'] }}</ion-title>
+                </ion-toolbar>
+            </ion-header>
 
-        <ion-content :fullscreen="false">
-            <div class="bg-img">
-                <img v-if="game['url-gameImage']" :src="game['url-gameImage']" alt="">
-                <img v-else src="assets/icon/icon-quad.png" alt="">
-            </div>
-
-            <div class="game-info">
-                <div class="info-box">
-                    <ion-header collapse="condense">
-                        <ion-toolbar color="transparent"></ion-toolbar>
-                    </ion-header>
-
-                    <div class="title">
-                        <span>{{ game['game-name'] }}</span>
-                        <span>{{ game['game-type'] }}({{ game['game-personnel'] }})</span>
-                    </div>
-                    <div class="text">
-                        {{ game['game-comment'] }}
-                    </div>
-                    <div class="hash-tag">
-                        {{ game['game-hashTag'] }}
-                    </div>
+            <ion-content :fullscreen="true">
+                <div class="bg-img">
+                    <img v-if="game['url-gameImage']" :src="game['url-gameImage']" alt="">
+                    <img v-else src="assets/icon/icon-quad.png" alt="">
                 </div>
 
-                <ion-card>
-                    <ion-card-content>
-                        <div class="item">
-                            <span>{{ game['game-personnel'] }}</span>
-                            <span>인원수</span>
-                        </div>
-                        <div class="item">
-                            <span>{{ game['game-level'] }}</span>
-                            <span>난이도</span>
-                        </div>
-                        <div class="item">
-                            <span>{{ game['game-playTime'] }}</span>
-                            <span>플레이타임</span>
-                        </div>
-                        <div class="item">
-                            <span>{{ game['position'] }}</span>
-                            <span>위치</span>
-                        </div>
-                    </ion-card-content>
-                </ion-card>
-            </div>
+                <div class="game-info">
+                    <div class="info-box">
+                        <ion-header collapse="condense">
+                            <ion-toolbar color="transparent"></ion-toolbar>
+                        </ion-header>
 
-            <div class="play-info">
-                <iframe v-if="game['url-youtube']" :src="game['url-youtube']" title="YouTube video player" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
+                        <div class="title">
+                            <span>{{ game['game-name'] }}</span>
+                            <span>{{ game['game-type'] }}({{ game['game-personnel'] }})</span>
+                        </div>
+                        <div class="text">
+                            {{ game['game-comment'] }}
+                        </div>
+                        <div class="hash-tag">
+                            {{ game['game-hashTag'] }}
+                        </div>
+                    </div>
 
-                <NullBoxContainer type="video" v-else></NullBoxContainer>
+                    <ion-card>
+                        <ion-card-content>
+                            <div class="item">
+                                <span>{{ game['game-personnel'] }}</span>
+                                <span>인원수</span>
+                            </div>
+                            <div class="item">
+                                <span>{{ game['game-level'] }}</span>
+                                <span>난이도</span>
+                            </div>
+                            <div class="item">
+                                <span>{{ game['game-playTime'] }}</span>
+                                <span>플레이타임</span>
+                            </div>
+                            <div class="item">
+                                <span>{{ game['position'] }}</span>
+                                <span>위치</span>
+                            </div>
+                        </ion-card-content>
+                    </ion-card>
+                </div>
 
-                <img v-if="game['url-gameDescriptionImage']" :src="game['url-gameDescriptionImage']" alt="">
-                
-                <NullBoxContainer type="image" v-else></NullBoxContainer>
-            </div>
-        </ion-content>
+                <div class="play-info">
+                    <iframe v-if="game['url-youtube']" :src="game['url-youtube']" title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+
+                    <NoDataVue text="조회된 영상이 없습니다" v-else></NoDataVue>
+
+                    <img v-if="game['url-gameDescriptionImage']" :src="game['url-gameDescriptionImage']" alt="">
+
+                    <NoDataVue text="조회된 이미지가 없습니다" v-else></NoDataVue>
+                </div>
+            </ion-content>
+        </template>
+        <template v-else>
+            <ion-header :translucent="true">
+                <ion-toolbar>
+                    <ion-buttons>
+                        <ion-back-button></ion-back-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+
+            <ion-content :fullscreen="true">
+                <NoDataVue></NoDataVue>
+            </ion-content>
+        </template>
     </ion-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
 import {
     IonPage,
     IonContent,
@@ -81,10 +97,14 @@ import {
     IonBackButton,
     IonCard,
     IonCardContent,
-    IonTitle
+    IonTitle,
+    loadingController,
+    alertController
 } from '@ionic/vue'
-import NullBoxContainer from '@/components/NullBoxContainer.vue'
-import { Storage } from '@capacitor/storage';
+import GoogleApi from '@/utils/GoogleApi'
+import Common from '@/utils/Common'
+import NoDataVue from '@/components/NoData.vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
     components: {
@@ -97,18 +117,40 @@ export default defineComponent({
         IonCard,
         IonCardContent,
         IonTitle,
-        NullBoxContainer
+        NoDataVue
     },
-    data() {
-        return {
-            game: Object as any
-        }
-    },
-    async mounted() {
-        const result = await Storage.get({key:'gameList'});
+    setup() {
+        const game = ref();
+        const route = useRoute();
 
-        if(result.value) {
-            this.game = JSON.parse(result.value).filter((game: any) => game['id'] == this.$route.params.gameId)[0];
+        onMounted(async () => {
+            const loading = await loadingController.create({
+                message: "데이터 조회중",
+                mode: "ios",
+            });
+
+            loading.present();
+
+            try {
+                const list: any[] = await GoogleApi.getSingleSheetData('게임리스트');
+                game.value = list.filter(gameInfo => gameInfo['id'] === route.params.gameId)[0];
+            } catch (error) {
+                const alert = await alertController.create({
+                    header: "오류 발생",
+                    subHeader: `${error}`,
+                    buttons: ["OK"],
+                    mode: "ios",
+                });
+
+                await alert.present();
+            } finally {
+                loading.dismiss();
+            }
+        })
+
+        return {
+            Common,
+            game,
         }
     },
 })

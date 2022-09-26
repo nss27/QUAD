@@ -1,5 +1,5 @@
 <template>
-    <ion-card @click="getGameInfo">
+    <ion-card :router-link="`/game/${game.id}`">
         <div class="img-box">
             <img v-if="game['url-gameImage']" :src="game['url-gameImage']" alt="">
             <img v-else src="assets/icon/icon-quad.png" alt="">
@@ -22,23 +22,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import {IonCard} from '@ionic/vue'
+import { IonCard } from '@ionic/vue'
 
 export default defineComponent({
     props: ['game'],
     components: {
         IonCard
     },
-    methods: {
-        getGameInfo() {
-            this.$router.push({
-                name: 'game',
-                params: {
-                    gameId: this.game['id']
-                }
-            })
-        }
-    }
 })
 </script>
 

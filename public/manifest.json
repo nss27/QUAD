@@ -4,7 +4,6 @@
   "dir": "ltr",
   "display": "standalone",
   "name": "QUAD",
-  "orientation": "any",
   "scope": "/",
   "short_name": "QUAD",
   "start_url": "/",
@@ -18,7 +17,7 @@
     {
       "src": "assets/icon/icon-quad.png",
       "type": "image/png",
-      "sizes": "520x520"
+      "sizes": "512x512"
     }
   ]
 }

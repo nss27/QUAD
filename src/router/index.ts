@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
 import HomePage from "@/views/HomePage.vue";
+import GameListPage from "@/views/GameListPage.vue";
+import GamePage from "@/views/GamePage.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,12 +12,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/gameList/:gameType/:gamePersonnel/:gameLevel",
     name: "gameList",
-    component: () => import("@/views/GameListPage.vue"),
+    component: GameListPage,
   },
   {
     path: "/game/:gameId",
-    name: "game",
-    component: () => import("@/views/GamePage.vue"),
+    component: GamePage,
   },
 ];
 

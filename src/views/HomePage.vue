@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <ion-content color="quad-blue">
+        <ion-content :fullscreen="true" color="quad-blue">
             <div class="title">
                 <div>QUAD</div>
                 <div>보다 더 새로운 재미</div>
@@ -8,11 +8,11 @@
             </div>
 
             <ion-card class="search-box">
-                <CheckBoxContainer :init-check-item="CheckItem01"></CheckBoxContainer>
+                <CheckBoxVue :check-item="CheckItem01"></CheckBoxVue>
                 <div class="br"></div>
-                <CheckBoxContainer :init-check-item="CheckItem02"></CheckBoxContainer>
+                <CheckBoxVue :check-item="CheckItem02"></CheckBoxVue>
                 <div class="br"></div>
-                <CheckBoxContainer :init-check-item="CheckItem03"></CheckBoxContainer>
+                <CheckBoxVue :check-item="CheckItem03"></CheckBoxVue>
             </ion-card>
         </ion-content>
 
@@ -36,10 +36,11 @@ import {
     IonCard,
     IonButton,
 } from '@ionic/vue';
-import CheckBoxContainer from "@/components/CheckBoxContainer.vue";
 import CheckItem01 from '@/jsons/CheckItem01.json'
 import CheckItem02 from '@/jsons/CheckItem02.json'
 import CheckItem03 from '@/jsons/CheckItem03.json'
+import CheckBoxVue from "@/components/CheckBox.vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
     components: {
@@ -49,27 +50,29 @@ export default defineComponent({
         IonToolbar,
         IonCard,
         IonButton,
-        CheckBoxContainer
+        CheckBoxVue
     },
     setup() {
+        const router = useRouter();
+
+        const searchGameList = () => {
+            router.push({
+                name: 'gameList',
+                params: {
+                    gameType: CheckItem01.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(','),
+                    gamePersonnel: CheckItem02.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(','),
+                    gameLevel: CheckItem03.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(',')
+                }
+            })
+        }
+
         return {
             CheckItem01,
             CheckItem02,
             CheckItem03,
+            searchGameList
         }
     },
-    methods: {
-        searchGameList() {
-            this.$router.push({
-                name: 'gameList',
-                params: {
-                    gameType: this.CheckItem01.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(','),
-                    gamePersonnel: this.CheckItem02.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(','),
-                    gameLevel: this.CheckItem03.items.filter((item: any) => item.isChecked).map((item: any) => item.text).join(',')
-                }
-            })
-        }
-    }
 });
 </script>
 
