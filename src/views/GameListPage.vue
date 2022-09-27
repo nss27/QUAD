@@ -64,7 +64,7 @@ export default defineComponent({
                 mode: "ios",
             });
 
-            loading.present();
+            await loading.present();
 
             try {
                 const list: any[] = await GoogleApi.getSingleSheetData('게임리스트');
