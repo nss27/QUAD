@@ -144,7 +144,7 @@ export default defineComponent({
 
                 await alert.present();
             } finally {
-                loading.dismiss();
+                await loading.dismiss();
             }
         })
 
