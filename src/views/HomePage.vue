@@ -8,11 +8,11 @@
             </div>
 
             <ion-card class="search-box">
-                <CheckBoxVue :check-item="CheckItem01"></CheckBoxVue>
+                <check-box-vue :check-item="CheckItem01"></check-box-vue>
                 <div class="br"></div>
-                <CheckBoxVue :check-item="CheckItem02"></CheckBoxVue>
+                <check-box-vue :check-item="CheckItem02"></check-box-vue>
                 <div class="br"></div>
-                <CheckBoxVue :check-item="CheckItem03"></CheckBoxVue>
+                <check-box-vue :check-item="CheckItem03"></check-box-vue>
             </ion-card>
         </ion-content>
 

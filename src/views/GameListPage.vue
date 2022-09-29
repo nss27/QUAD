@@ -2,19 +2,22 @@
     <ion-page>
         <ion-header :translucent="true">
             <ion-toolbar>
-                <ion-buttons>
+                <ion-buttons slot="start">
                     <ion-back-button></ion-back-button>
                 </ion-buttons>
                 <ion-title>추천 리스트</ion-title>
+                <ion-buttons slot="end">
+                    <home-button-vue></home-button-vue>
+                </ion-buttons>
             </ion-toolbar>
         </ion-header>
 
         <ion-content :fullscreen="true">
             <template v-if="!Common.isNull(gameList)">
-                <GameInfoCardVue v-for="game in gameList" :key="game['id']" :game="game"></GameInfoCardVue>
+                <game-info-card-vue v-for="game in gameList" :key="game['id']" :game="game"></game-info-card-vue>
             </template>
 
-            <NoDataVue v-else></NoDataVue>
+            <no-data-vue v-else></no-data-vue>
         </ion-content>
     </ion-page>
 </template>
@@ -37,6 +40,7 @@ import GoogleApi from '@/utils/GoogleApi';
 import Common from '@/utils/Common';
 import GameInfoCardVue from '@/components/GameInfoCard.vue';
 import NoDataVue from '@/components/NoData.vue';
+import HomeButtonVue from '@/components/HomeButton.vue';
 
 export default defineComponent({
     components: {
@@ -48,7 +52,8 @@ export default defineComponent({
         IonButtons,
         IonBackButton,
         GameInfoCardVue,
-        NoDataVue
+        NoDataVue,
+        HomeButtonVue
     },
     setup() {
         const gameList = ref();

@@ -3,10 +3,13 @@
         <template v-if="!Common.isNull(game)">
             <ion-header class="ion-no-border" collapse="fade" :translucent="true">
                 <ion-toolbar>
-                    <ion-buttons>
+                    <ion-buttons slot="start">
                         <ion-back-button></ion-back-button>
                     </ion-buttons>
                     <ion-title>{{ game['game-name'] }}</ion-title>
+                    <ion-buttons slot="end">
+                        <home-button-vue></home-button-vue>
+                    </ion-buttons>
                 </ion-toolbar>
             </ion-header>
 
@@ -62,11 +65,11 @@
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
 
-                    <NoDataVue text="조회된 영상이 없습니다" v-else></NoDataVue>
+                    <no-data-vue text="조회된 영상이 없습니다" v-else></no-data-vue>
 
                     <img v-if="game['url-gameDescriptionImage']" :src="game['url-gameDescriptionImage']" alt="">
 
-                    <NoDataVue text="조회된 이미지가 없습니다" v-else></NoDataVue>
+                    <no-data-vue text="조회된 이미지가 없습니다" v-else></no-data-vue>
                 </div>
             </ion-content>
         </template>
@@ -80,7 +83,7 @@
             </ion-header>
 
             <ion-content :fullscreen="true">
-                <NoDataVue></NoDataVue>
+                <no-data-vue></no-data-vue>
             </ion-content>
         </template>
     </ion-page>
@@ -105,6 +108,7 @@ import GoogleApi from '@/utils/GoogleApi'
 import Common from '@/utils/Common'
 import NoDataVue from '@/components/NoData.vue'
 import { useRoute } from 'vue-router'
+import HomeButtonVue from '@/components/HomeButton.vue'
 
 export default defineComponent({
     components: {
@@ -117,7 +121,8 @@ export default defineComponent({
         IonCard,
         IonCardContent,
         IonTitle,
-        NoDataVue
+        NoDataVue,
+        HomeButtonVue
     },
     setup() {
         const game = ref();
